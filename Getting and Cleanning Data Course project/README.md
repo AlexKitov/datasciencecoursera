@@ -5,16 +5,20 @@ This script was developed as part of a course project for Getting and cleaning d
 The script works with data from "Human Activity Recognition Using Smartphones" experiments performed by Smartlab - Non Linear Complex Systems Laboratory in
 `DITEN - Università degli Studi di Genova`. 
 
-The script "run_analysis.R" perform readings from several files from the provided data and returns tidy dataset for further analysis as required for course project. The following  requirements should be met to allow for the proper functioning of the script:
+The script `run_analysis.R` perform readings from several files from the provided data and returns tidy dataset for further analysis as required for course project. The following  requirements should be met to allow for the proper functioning of the script:
 
 * the script file `run_analysis.R` is placed in the R's working directory
-* the working dataset is also placed in the working directory by one of the following two ways
-	1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
-	2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
+* the working dataset is also placed in the working directory by one of the following two ways:
+		1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
+		2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
 * the package `plyr` is installed `install.packages("plyr")` and necessary loaded 
 * the package `reshape2` is installed  `(install.package("reshape2"))` and necessary loaded
 
-I. The main function of the script is mergedata(). The function performs several actions during execution:
+### Main function mergedata
+
+The main function of the script is `mergedata()`. The function performs several actions during execution:
+
+##Description
 
 1. checks if the the necessary folder or .zip file exists in the working directory
 2. loads the paths to the files containing the data used in the transformation, which are:
@@ -78,6 +82,7 @@ activityFile - character - contains a vector indicating the activity performed b
 subjectFile - character - contains a vector indicating the subject who performed the activity  
 varFile - character - contains 563 column vectors representing calculated variables from the raw data of the experiments
 
+<!-- -->
 
 	mergedata <- function(){
         #check if the data exist in the working directory. 
