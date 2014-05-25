@@ -57,7 +57,7 @@ cleanstr(strvect = character(), separator ="", tolower = FALSE)
 #### Description
  
 `cleandstr` removes the punctual characters from the elements of a character vector passed to the strvect parameter of the function.
-The set of cleaned characters includes: "\]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~-" . The function loads stringr package providing the str_trim function, used to remove any white space after the name of the variable. The function gsub() is used for the cleaning of the names, with value of the argument `pattern = [[:punct:]]` http://www.regular-expressions.info/posixbrackets.html   
+The set of cleaned characters includes: "\]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~-" . The function loads stringr package providing the str_trim function, used to remove any white space after the name of the variable. The function gsub() is used for the cleaning of the names, with value of the argument pattern = [[:punct:]] http://www.regular-expressions.info/posixbrackets.html   
 
 #### Arguments
 
@@ -95,6 +95,8 @@ The arguments are tree character vectors containing the paths of the three fails
 * `activityFile` - character - contains a vector indicating the activity performed by the subject 
 * `subjectFile` - character - contains a vector indicating the subject who performed the activity  
 * `varFile` - character - contains 563 column vectors representing calculated variables from the raw data of the experiments
+
+The code of the aforementioned functions is attached below 
 
 <!-- -->
 
