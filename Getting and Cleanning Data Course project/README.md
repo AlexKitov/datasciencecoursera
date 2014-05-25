@@ -1,16 +1,16 @@
 This script was developed as part of a course project for Getting and cleaning data course part of Coursera's Data Scientist Specialization.
 
 The script works with data from "Human Activity Recognition Using Smartphones" experiments performed by Smartlab - Non Linear Complex Systems Laboratory in
-DITEN - Università degli Studi di Genova. 
+`DITEN - Università degli Studi di Genova`. 
 
 The script "run_analysis.R" perform readings from several files from the provided data and returns tidy dataset for further analysis as required for course project. The following  requirements should be met to allow for the proper functioning of the script:
 
-* the script file - "run_analysis.R"- is placed in the R's working directory
+* the script file `run_analysis.R` is placed in the R's working directory
 * the working dataset is also placed in the working directory by one of the following two ways
-	1. as a "getdata-projectfiles-UCI HAR Dataset.zip" file - in which case the script will unzip the file
+	1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
 	2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
-* the package "plyr" is installed (install.packages("plyr")) and necessary loaded 
-* the package "reshape2" is installed  (install.package("reshape2")) and necessary loaded
+* the package `plyr` is installed `install.packages("plyr")` and necessary loaded 
+* the package `reshape2` is installed  `(install.package("reshape2"))` and necessary loaded
 
 I. The main function of the script is mergedata(). The function performs several actions during execution:
 
@@ -77,7 +77,7 @@ subjectFile - character - contains a vector indicating the subject who performed
 varFile - character - contains 563 column vectors representing calculated variables from the raw data of the experiments
 
 
-mergedata <- function(){
+	mergedata <- function(){
         #check if the data exist in the working directory. 
         #if not, checks for the .zip file and tries to unzip the file
         #if fail to unzip stops the function with a message for missing data
@@ -142,10 +142,10 @@ mergedata <- function(){
         write.table(data,"./data.csv",sep=",")
         write.table(sampledata,"./sampledata.csv",sep=",")
         write.table(tidydata,"./tidydata.csv",sep=",")
-}
+	}
 
 
-tidyData <- function(df = data.frame()){
+	tidyData <- function(df = data.frame()){
         #load the library for the "melat" and "dcast"
         library(reshape2)
         
@@ -155,9 +155,9 @@ tidyData <- function(df = data.frame()){
         df <- dcast(df, activity+subject~variable, mean)
         
         df
-}
+	}
 
-cleanstr <- function(strvect = character(), separator ="", tolower = FALSE){
+	cleanstr <- function(strvect = character(), separator ="", tolower = FALSE){
         library(stringr)
         
         #[[:punct:]] regular expresions to remove all "punctuation characters"
@@ -170,9 +170,9 @@ cleanstr <- function(strvect = character(), separator ="", tolower = FALSE){
                 strvect <- tolower(strvect)    
         }
         strvect
-}
+	}
 
-readdata <- function(activityFile=character(), 
+	readdata <- function(activityFile=character(), 
                      subjectFile=character(), 
                      varFile=character()){
         
@@ -187,5 +187,5 @@ readdata <- function(activityFile=character(),
         
         #return data frame binded by columns
         cbind(activity, subject, data)       
-}
+	}
 
