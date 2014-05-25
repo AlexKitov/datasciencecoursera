@@ -9,30 +9,30 @@ The script `run_analysis.R` perform readings from several files from the provide
 
 * the script file `run_analysis.R` is placed in the R's working directory
 * the working dataset is also placed in the working directory by one of the following two ways:
-	1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
-	2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
-* the package `plyr` is installed `install.packages("plyr")` and necessary loaded 
-* the package `reshape2` is installed  `(install.package("reshape2"))` and necessary loaded
+	1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file.
+	2. already unzipped data - in which case the script will search for folder called `UCI HAR Dataset`.
+* the package `plyr` is installed `install.packages("plyr")` and necessary loaded. 
+* the package `reshape2` is installed  `(install.package("reshape2"))` and necessary loaded.
 
 ### Description of main function mergedata
 
 The main function of the script is `mergedata()`. The function performs several actions during execution:
 
-1. checks if the the necessary folder or .zip file exists in the working directory
+1. checks if the the necessary folder or .zip file exists in the working directory.
 2. loads the paths to the files containing the data used in the transformation, which are:
-	2.1 activity_labels.txt - descriptive labels for the activities performed by the participants in the experiment
-	2.2 features.txt - names of the variables calculated from the raw measurements during the experiment
-	2.3 y_(test|train).txt - contains a column vector representing the activity performed by the subject
-	2.4 subject_(test|train).txt - contains a column vector representing the subject who performed the activity
-	2.5 X_(test|train).txt - contains a multiple (563) column vectors representing variables calculated from the raw data from the experiment and matched by activity and subject 
-3. reads the data for the test subjects and stores it in internal data.frame - "testdata"
-4. reads the data for the training subjects and stores it in internal data.frame - "traindata"
+	2.1 `activity_labels.txt` - descriptive labels for the activities performed by the participants in the experiment.
+	2.2 `features.txt` - names of the variables calculated from the raw measurements during the experiment.
+	2.3 `y_(test|train).txt` - contains a column vector representing the activity performed by the subject.
+	2.4 `subject_(test|train).txt` - contains a column vector representing the subject who performed the activity.
+	2.5 `X_(test|train).txt` - contains a multiple (563) column vectors representing variables calculated from the raw data from the experiment and matched by activity and subject.
+3. reads the data for the test subjects and stores it in internal data.frame `testdata`
+4. reads the data for the training subjects and stores it in internal data.frame `traindata`
 5. stores the two datasets in a single data.frame by rows
-6. reads the variable names from file "features.txt" and cleaning them with cleanstr referring to https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml
-7. set the mergeddata(data.frame) names with the processed names from 6. Additionally first column name is set to "activity" and the second as "subject"
-8. set the activity values from the file "activitu_labels.txt" The values are processed with cleanstr before applied.
-9. sort the mergeddata data.frame first by activity and second by subject
-10. extract only variables which has "mean" OR "std" in the name, also accounting for capital first latter.
+6. reads the variable names from file `features.txt` and cleaning them with `cleanstr` referring to https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml
+7. set the `mergeddata`(data.frame) names with the processed names from 6. Additionally first column name is set to `activity` and the second as `subject`
+8. set the activity values from the file `activitu_labels.txt` The values are processed with `cleanstr` before applied.
+9. sort the `mergeddata` data.frame first by activity and second by subject
+10. extract only variables which has `mean` OR `std` in the name, also accounting for capital first latter.
 11. construct tidy dataset from the data from the previous step.
 12. write all the data into .csv files 
 
@@ -46,13 +46,13 @@ cleanstr(strvect = character(), separator ="", tolower = FALSE)
 
 #### Description
  
-cleandstr removes the punctual characters from the elements of a character vector passed to the strvect parameter of the function.
-The set of cleaned characters includes: \]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~- . The function loads stringr package providing the str_trim function. The function gsub() is used for the cleaning of the names, with value of the argument pattern = "[[:punct:]]"   
+`cleandstr` removes the punctual characters from the elements of a character vector passed to the strvect parameter of the function.
+The set of cleaned characters includes: `\]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~-` . The function loads stringr package providing the str_trim function. The function gsub() is used for the cleaning of the names, with value of the argument pattern = "[[:punct:]]"   
 
 #### Arguments
 
-separator - character - used as a substitute of the punctual characters. It is included since according to [REFEFEFEFEF] the variable names in R should be with "." separator of the words. the PROBEM WITH "()" combination
-tolower - boolean - its value determines weather or not the capital letters in the strvect elements should be replaced with lower ones. 
+`separator` - character - used as a substitute of the punctual characters. It is included since according to [REFEFEFEFEF] the variable names in R should be with "." separator of the words. the PROBEM WITH "()" combination
+`tolower` - boolean - its value determines weather or not the capital letters in the strvect elements should be replaced with lower ones. 
  
 ### Function of `tidyData`
 
@@ -68,7 +68,7 @@ The function tidyData is used to calculate the average by "activity" and "subjec
 
 ####Arguments
 
-df - data.frame - the input data from which the tidy data is constructed 
+`df` - data.frame - the input data from which the tidy data is constructed 
 
 ### Function of `readdata`
 
@@ -82,9 +82,9 @@ readdata <- function(activityFile=character(), subjectFile=character(), varFile=
 
 The arguments are tree character vectors containing the paths of the three fails need to for constructing the data. 
 
-activityFile - character - contains a vector indicating the activity performed by the subject 
-subjectFile - character - contains a vector indicating the subject who performed the activity  
-varFile - character - contains 563 column vectors representing calculated variables from the raw data of the experiments
+`activityFile` - character - contains a vector indicating the activity performed by the subject 
+`subjectFile` - character - contains a vector indicating the subject who performed the activity  
+`varFile` - character - contains 563 column vectors representing calculated variables from the raw data of the experiments
 
 <!-- -->
 
