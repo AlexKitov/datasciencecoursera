@@ -61,8 +61,8 @@ The set of cleaned characters includes: "\]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~-" . T
 
 #### Arguments
 
-*`separator` - character - used as a substitute of the punctual characters. It is included since according to https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml the variable names in R should be with "." separator of the words.
-*`tolower` - boolean - its value determines weather or not the capital letters in the `strvect` elements should be replaced with lower ones. 
+* `separator` - character - used as a substitute of the punctual characters. It is included since according to https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml the variable names in R should be with "." separator of the words.
+* `tolower` - boolean - its value determines weather or not the capital letters in the `strvect` elements should be replaced with lower ones. 
  
 ### Function of `tidyData`
 
