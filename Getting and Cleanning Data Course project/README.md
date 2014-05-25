@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 This script was developed as part of a course project for Getting and cleaning data course part of Coursera's Data Scientist Specialization.
 
@@ -9,16 +9,14 @@ The script `run_analysis.R` perform readings from several files from the provide
 
 * the script file `run_analysis.R` is placed in the R's working directory
 * the working dataset is also placed in the working directory by one of the following two ways:
-		1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
-		2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
+1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
+2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
 * the package `plyr` is installed `install.packages("plyr")` and necessary loaded 
 * the package `reshape2` is installed  `(install.package("reshape2"))` and necessary loaded
 
-### Main function mergedata
+## Description of main function mergedata
 
 The main function of the script is `mergedata()`. The function performs several actions during execution:
-
-##Description
 
 1. checks if the the necessary folder or .zip file exists in the working directory
 2. loads the paths to the files containing the data used in the transformation, which are:
@@ -38,43 +36,49 @@ The main function of the script is `mergedata()`. The function performs several 
 11. construct tidy dataset from the data from the previous step.
 12. write all the data into .csv files 
 
-II. cleanstr is used to process the names of the variables and activities before they are applied to the data.frame
+## Function of `cleanstr`
 
-Syntax
+cleanstr is used to process the names of the variables and activities before they are applied to the data.frame
+
+####Syntax
 
 cleanstr(strvect = character(), separator ="", tolower = FALSE)
 
-Description
+#### Description
  
 cleandstr removes the punctual characters from the elements of a character vector passed to the strvect parameter of the function.
 The set of cleaned characters includes: \]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~- . The function loads stringr package providing the str_trim function. The function gsub() is used for the cleaning of the names, with value of the argument pattern = "[[:punct:]]"   
 
-Arguments
+#### Arguments
 
 separator - character - used as a substitute of the punctual characters. It is included since according to [REFEFEFEFEF] the variable names in R should be with "." separator of the words. the PROBEM WITH "()" combination
 tolower - boolean - its value determines weather or not the capital letters in the strvect elements should be replaced with lower ones. 
  
-III  The function tidyData is used to calculate the average by "activity" and "subject" for each variable. 
+## Function of `tidyData`
 
-Syntax
+The function tidyData is used to calculate the average by "activity" and "subject" for each variable. 
+
+#### Syntax
 
 tidyData <- (df = data.frame())
 
-Description
+####Description
 
 The function tidyData is used to calculate the average by "activity" and "subject" for each variable. The function requires the installation of  reshape2 package in advance. The function then loads the package with library(reshape2). Afterwords the data is melted to a slim long data.frame by "activity" and "subject" and cast back to form a 180 rows by 88 columns tidy data.frame used as a final result for the course project 
 
-Arguments
+####Arguments
 
 df - data.frame - the input data from which the tidy data is constructed 
 
-IV the function readdata is used to read a set of tree fails and to combine them in a data.frame with proper format (by columns- "activity", "subject", 563 variables)
+## Function of `readdata`
 
-Syntax
+The function readdata is used to read a set of tree fails and to combine them in a data.frame with proper format (by columns- "activity", "subject", 563 variables)
+
+####Syntax
 
 readdata <- function(activityFile=character(), subjectFile=character(), varFile=character())
 
-Arguments
+####Arguments
 
 The arguments are tree character vectors containing the paths of the three fails need to for constructing the data. 
 
