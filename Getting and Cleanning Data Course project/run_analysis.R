@@ -1,7 +1,7 @@
 data <- data.frame()
 sampledata <- data.frame()
 tidydata <- data.frame()
-mergedata <- function(){
+mergedata <- function(lowercase = TRUE){
         #check if the data exist in the working directory. 
         #if not, checks for the .zip file and tries to unzip the file
         #if fail to unzip stops the function with a message for missing data
@@ -37,12 +37,12 @@ mergedata <- function(){
         
         #clen and set the data.frame names
         features <- read.table(featuresF, colClasses="character")
-        colnames <- cleanstr(c("activity", "subject", features[,2]))
+        colnames <- cleanstr(c("activity", "subject", features[,2]),"", lowercase)
         names(mergeddata) <- colnames
         
         #get the activities corresponding to the numbers in the already read data
-        activityNames <- read.table (activitiesF, sep = " ", colClasses=character())
-        activityNames <-cleanstr(activityNames[,2],".",TRUE)
+        activityNames <- read.table (activitiesF, sep = "", colClasses=character())
+        activityNames <-cleanstr(activityNames[,2], "", lowercase)
         
         #change the activity classes with readable names
         mergeddata$activity <- as.factor(mergeddata$activity)
@@ -65,7 +65,7 @@ mergedata <- function(){
         #write all the data in separate files 
         write.table(data,"./data.csv",sep=",")
         write.table(sampledata,"./sampledata.csv",sep=",")
-        write.table(tidydata,"./tidydata.txt",sep=" ",)
+        write.table(tidydata,"./tidydata.csv",sep=",",)
 }
 
 tidyData <- function(df = data.frame()){

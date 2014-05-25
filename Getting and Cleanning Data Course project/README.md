@@ -5,7 +5,7 @@ This script was developed as part of a course project for Getting and cleaning d
 The script works with data from "Human Activity Recognition Using Smartphones" experiments performed by Smartlab - Non Linear Complex Systems Laboratory in
 `DITEN - Università degli Studi di Genova`. 
 
-The script `run_analysis.R` perform readings from several files from the provided data and returns tidy dataset for further analysis as required for course project. The following  requirements should be met to allow for the proper functioning of the script:
+The script `run_analysis.R` perform readings from several files from the provided data and returns tidy dataset for further analysis, as required for course project. The following  requirements should be met to allow for the proper functioning of the script:
 
 * the script file `run_analysis.R` is placed in the R's working directory
 * the working dataset is also placed in the working directory by one of the following two ways:
@@ -17,6 +17,12 @@ The script `run_analysis.R` perform readings from several files from the provide
 ### Description of main function mergedata
 
 The main function of the script is `mergedata()`. The function performs several actions during execution:
+
+####Syntax
+
+mergedata <- function(lowercase = TRUE)
+
+#### Description
 
 1. checks if the the necessary folder or .zip file exists in the working directory.
 2. loads the paths to the files containing the data used in the transformation, which are:
@@ -35,6 +41,10 @@ The main function of the script is `mergedata()`. The function performs several 
 10. extract only variables which has `mean` OR `std` in the name, also accounting for capital first latter.
 11. construct tidy dataset from the data from the previous step.
 12. write all the data into .csv files 
+
+#### Arguments
+
+`lowercase` - boolean - Determine if the names should be lower cases. Passed as an argument to cleanstr() during the execution of mergedata(). 
 
 ### Function of `cleanstr`
 
@@ -88,7 +98,7 @@ The arguments are tree character vectors containing the paths of the three fails
 
 <!-- -->
 
-	mergedata <- function(){
+	mergedata <- function(lowercase = TRUE){
         #check if the data exist in the working directory. 
         #if not, checks for the .zip file and tries to unzip the file
         #if fail to unzip stops the function with a message for missing data
@@ -124,12 +134,12 @@ The arguments are tree character vectors containing the paths of the three fails
         
         #clen and set the data.frame names
         features <- read.table(featuresF, colClasses="character")
-        colnames <- cleanstr(c("activity", "subject", features[,2]))
+        colnames <- cleanstr(c("activity", "subject", features[,2]),"", lowercase)
         names(mergeddata) <- colnames
         
         #get the activities corresponding to the numbers in the already read data
-        activityNames <- read.table (activitiesF, sep = " ", colClasses=character())
-        activityNames <-cleanstr(activityNames[,2],".",TRUE)
+        activityNames <- read.table (activitiesF, sep = "", colClasses=character())
+        activityNames <-cleanstr(activityNames[,2], "", lowercase)
         
         #change the activity classes with readable names
         mergeddata$activity <- as.factor(mergeddata$activity)
@@ -152,7 +162,7 @@ The arguments are tree character vectors containing the paths of the three fails
         #write all the data in separate files 
         write.table(data,"./data.csv",sep=",")
         write.table(sampledata,"./sampledata.csv",sep=",")
-        write.table(tidydata,"./tidydata.csv",sep=",")
+        write.table(tidydata,"./tidydata.txt",sep=" ",)
 	}
 
 <!-- -->
