@@ -26,11 +26,11 @@ mergedata <- function(lowercase = TRUE)
 
 1. checks if the the necessary folder or .zip file exists in the working directory.
 2. loads the paths to the files containing the data used in the transformation, which are:
-* `activity_labels.txt` - descriptive labels for the activities performed by the participants in the experiment.
-* `features.txt` - names of the variables calculated from the raw measurements during the experiment.
-* `y_(test|train).txt` - contains a column vector representing the activity performed by the subject.
-* `subject_(test|train).txt` - contains a column vector representing the subject who performed the activity.
-* `X_(test|train).txt` - contains a multiple (563) column vectors representing variables calculated from the raw data from the experiment and matched by activity and subject.
+	* `activity_labels.txt` - descriptive labels for the activities performed by the participants in the experiment.
+	* `features.txt` - names of the variables calculated from the raw measurements during the experiment.
+	* `y_(test|train).txt` - contains a column vector representing the activity performed by the subject.
+	* `subject_(test|train).txt` - contains a column vector representing the subject who performed the activity.
+	* `X_(test|train).txt` - contains a multiple (563) column vectors representing variables calculated from the raw data from the experiment and matched by activity and subject.
 3. reads the data for the test subjects and stores it in internal data.frame `testdata`
 4. reads the data for the training subjects and stores it in internal data.frame `traindata`
 5. stores the two datasets in a single data.frame by rows
