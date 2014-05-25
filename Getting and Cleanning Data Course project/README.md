@@ -1,3 +1,5 @@
+# Introduction
+
 This script was developed as part of a course project for Getting and cleaning data course part of Coursera's Data Scientist Specialization.
 
 The script works with data from "Human Activity Recognition Using Smartphones" experiments performed by Smartlab - Non Linear Complex Systems Laboratory in
