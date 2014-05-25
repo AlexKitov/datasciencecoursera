@@ -61,8 +61,8 @@ The set of cleaned characters includes: \]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~- . The
 
 #### Arguments
 
-`separator` - character - used as a substitute of the punctual characters. It is included since according to https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml the variable names in R should be with "." separator of the words.
-`tolower` - boolean - its value determines weather or not the capital letters in the `strvect` elements should be replaced with lower ones. 
+*`separator` - character - used as a substitute of the punctual characters. It is included since according to https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml the variable names in R should be with "." separator of the words.
+*`tolower` - boolean - its value determines weather or not the capital letters in the `strvect` elements should be replaced with lower ones. 
  
 ### Function of `tidyData`
 
@@ -92,9 +92,9 @@ readdata <- function(activityFile=character(), subjectFile=character(), varFile=
 
 The arguments are tree character vectors containing the paths of the three fails need to for constructing the data. 
 
-`activityFile` - character - contains a vector indicating the activity performed by the subject 
-`subjectFile` - character - contains a vector indicating the subject who performed the activity  
-`varFile` - character - contains 563 column vectors representing calculated variables from the raw data of the experiments
+*`activityFile` - character - contains a vector indicating the activity performed by the subject 
+*`subjectFile` - character - contains a vector indicating the subject who performed the activity  
+*`varFile` - character - contains 563 column vectors representing calculated variables from the raw data of the experiments
 
 <!-- -->
 
