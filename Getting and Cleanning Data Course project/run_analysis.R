@@ -63,9 +63,9 @@ mergedata <- function(lowercase = TRUE){
         tidydata <<- tidyData(sampledata)
         
         #write all the data in separate files 
-        write.table(data,"./data.csv",sep=",")
-        write.table(sampledata,"./sampledata.csv",sep=",")
-        write.table(tidydata,"./tidydata.csv",sep=",",)
+        #write.table(data,"./data.csv",sep=",")
+        #write.table(sampledata,"./sampledata.csv",sep=",")
+        write.table(tidydata,"./tidydata.txt",sep=",",)
 }
 
 tidyData <- function(df = data.frame()){
