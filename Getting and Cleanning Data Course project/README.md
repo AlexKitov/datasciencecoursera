@@ -1,4 +1,4 @@
-## Introduction
+### Introduction
 
 This script was developed as part of a course project for Getting and cleaning data course part of Coursera's Data Scientist Specialization.
 
@@ -9,22 +9,22 @@ The script `run_analysis.R` perform readings from several files from the provide
 
 * the script file `run_analysis.R` is placed in the R's working directory
 * the working dataset is also placed in the working directory by one of the following two ways:
-1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
-2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
+	1. as a `getdata-projectfiles-UCI HAR Dataset.zip` file - in which case the script will unzip the file
+	2. already unzipped data - in which case the script will search for folder called "UCI HAR Dataset "
 * the package `plyr` is installed `install.packages("plyr")` and necessary loaded 
 * the package `reshape2` is installed  `(install.package("reshape2"))` and necessary loaded
 
-## Description of main function mergedata
+### Description of main function mergedata
 
 The main function of the script is `mergedata()`. The function performs several actions during execution:
 
 1. checks if the the necessary folder or .zip file exists in the working directory
 2. loads the paths to the files containing the data used in the transformation, which are:
-		2.1 activity_labels.txt - descriptive labels for the activities performed by the participants in the experiment
-		2.2 features.txt - names of the variables calculated from the raw measurements during the experiment
-		2.3 y_(test|train).txt - contains a column vector representing the activity performed by the subject
-		2.4 subject_(test|train).txt - contains a column vector representing the subject who performed the activity
-		2.5 X_(test|train).txt - contains a multiple (563) column vectors representing variables calculated from the raw data from the experiment and matched by activity and subject 
+	2.1 activity_labels.txt - descriptive labels for the activities performed by the participants in the experiment
+	2.2 features.txt - names of the variables calculated from the raw measurements during the experiment
+	2.3 y_(test|train).txt - contains a column vector representing the activity performed by the subject
+	2.4 subject_(test|train).txt - contains a column vector representing the subject who performed the activity
+	2.5 X_(test|train).txt - contains a multiple (563) column vectors representing variables calculated from the raw data from the experiment and matched by activity and subject 
 3. reads the data for the test subjects and stores it in internal data.frame - "testdata"
 4. reads the data for the training subjects and stores it in internal data.frame - "traindata"
 5. stores the two datasets in a single data.frame by rows
@@ -36,7 +36,7 @@ The main function of the script is `mergedata()`. The function performs several 
 11. construct tidy dataset from the data from the previous step.
 12. write all the data into .csv files 
 
-## Function of `cleanstr`
+### Function of `cleanstr`
 
 cleanstr is used to process the names of the variables and activities before they are applied to the data.frame
 
@@ -54,7 +54,7 @@ The set of cleaned characters includes: \]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~- . The
 separator - character - used as a substitute of the punctual characters. It is included since according to [REFEFEFEFEF] the variable names in R should be with "." separator of the words. the PROBEM WITH "()" combination
 tolower - boolean - its value determines weather or not the capital letters in the strvect elements should be replaced with lower ones. 
  
-## Function of `tidyData`
+### Function of `tidyData`
 
 The function tidyData is used to calculate the average by "activity" and "subject" for each variable. 
 
@@ -70,7 +70,7 @@ The function tidyData is used to calculate the average by "activity" and "subjec
 
 df - data.frame - the input data from which the tidy data is constructed 
 
-## Function of `readdata`
+### Function of `readdata`
 
 The function readdata is used to read a set of tree fails and to combine them in a data.frame with proper format (by columns- "activity", "subject", 563 variables)
 
@@ -155,6 +155,7 @@ varFile - character - contains 563 column vectors representing calculated variab
         write.table(tidydata,"./tidydata.csv",sep=",")
 	}
 
+<!-- -->
 
 	tidyData <- function(df = data.frame()){
         #load the library for the "melat" and "dcast"
@@ -167,6 +168,7 @@ varFile - character - contains 563 column vectors representing calculated variab
         
         df
 	}
+<!-- -->
 
 	cleanstr <- function(strvect = character(), separator ="", tolower = FALSE){
         library(stringr)
@@ -182,7 +184,7 @@ varFile - character - contains 563 column vectors representing calculated variab
         }
         strvect
 	}
-
+<!-- -->
 	readdata <- function(activityFile=character(), 
                      subjectFile=character(), 
                      varFile=character()){
