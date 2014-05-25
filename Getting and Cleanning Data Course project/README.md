@@ -20,13 +20,11 @@ The main function of the script is `mergedata()`. The function performs several 
 
 1. checks if the the necessary folder or .zip file exists in the working directory.
 2. loads the paths to the files containing the data used in the transformation, which are:
-
 * `activity_labels.txt` - descriptive labels for the activities performed by the participants in the experiment.
 * `features.txt` - names of the variables calculated from the raw measurements during the experiment.
 * `y_(test|train).txt` - contains a column vector representing the activity performed by the subject.
 * `subject_(test|train).txt` - contains a column vector representing the subject who performed the activity.
 * `X_(test|train).txt` - contains a multiple (563) column vectors representing variables calculated from the raw data from the experiment and matched by activity and subject.
-
 3. reads the data for the test subjects and stores it in internal data.frame `testdata`
 4. reads the data for the training subjects and stores it in internal data.frame `traindata`
 5. stores the two datasets in a single data.frame by rows
@@ -49,16 +47,16 @@ cleanstr(strvect = character(), separator ="", tolower = FALSE)
 #### Description
  
 `cleandstr` removes the punctual characters from the elements of a character vector passed to the strvect parameter of the function.
-The set of cleaned characters includes: `\]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~-` . The function loads stringr package providing the str_trim function. The function gsub() is used for the cleaning of the names, with value of the argument pattern = "[[:punct:]]"   
+The set of cleaned characters includes: `\]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~-` . The function loads stringr package providing the str_trim function, used to remove any white space after the name of the variable. The function gsub() is used for the cleaning of the names, with value of the argument `pattern = [[:punct:]]` http://www.regular-expressions.info/posixbrackets.html   
 
 #### Arguments
 
-`separator` - character - used as a substitute of the punctual characters. It is included since according to [REFEFEFEFEF] the variable names in R should be with "." separator of the words. the PROBEM WITH "()" combination
-`tolower` - boolean - its value determines weather or not the capital letters in the strvect elements should be replaced with lower ones. 
+`separator` - character - used as a substitute of the punctual characters. It is included since according to https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml the variable names in R should be with "." separator of the words.
+`tolower` - boolean - its value determines weather or not the capital letters in the `strvect` elements should be replaced with lower ones. 
  
 ### Function of `tidyData`
 
-The function tidyData is used to calculate the average by "activity" and "subject" for each variable. 
+The function tidyData is used to calculate the average by `activity` and `subject` for each variable. 
 
 #### Syntax
 
