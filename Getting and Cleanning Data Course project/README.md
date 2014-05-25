@@ -21,7 +21,7 @@ The main function of the script is `mergedata()`. The function performs several 
 1. checks if the the necessary folder or .zip file exists in the working directory.
 2. loads the paths to the files containing the data used in the transformation, which are:
 
-*`activity_labels.txt` - descriptive labels for the activities performed by the participants in the experiment.
+* `activity_labels.txt` - descriptive labels for the activities performed by the participants in the experiment.
 * `features.txt` - names of the variables calculated from the raw measurements during the experiment.
 * `y_(test|train).txt` - contains a column vector representing the activity performed by the subject.
 * `subject_(test|train).txt` - contains a column vector representing the subject who performed the activity.
