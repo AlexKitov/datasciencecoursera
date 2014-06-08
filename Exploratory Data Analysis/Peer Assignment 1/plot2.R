@@ -5,10 +5,6 @@
 # given criterias and saves the canvas in a png file with 480X480 pixels
 
 plot2 <- function(){ 
-        if (!is.installed("chron")){
-                install.packages("chron")
-        }
-        library(chron)
         # Check for existing dataset and unzip if necessary
         # This assignment uses data from the UC Irvine Machine Learning Repository, 
         # a popular repository for machine learning datasets. In particular, 
