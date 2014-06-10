@@ -17,7 +17,7 @@ if (!file.exists(dataFile)) {
 }  
 
 data <- read.csv(file = dataFile, header = TRUE)
-data$date <- as.Date(data$date, format="%d/%m/%Y")
+data$date <- as.Date(data$date, format = "%Y-%m-%d")
 
 data$interval <- sprintf("%04d", data$interval)
 data$interval <- as.POSIXct(data$interval, format = "%H%M")
@@ -29,8 +29,8 @@ head(data, n = 25)
 
 ```
 ##          date            interval steps
-## 1  2012-10-01 2014-06-10 00:00:00     5
-## 2  2012-10-01 2014-06-10 00:05:00     5
+## 1  2012-10-01 2014-06-10 00:00:00    NA
+## 2  2012-10-01 2014-06-10 00:05:00    NA
 ## 3  2012-10-01 2014-06-10 00:10:00    NA
 ## 4  2012-10-01 2014-06-10 00:15:00    NA
 ## 5  2012-10-01 2014-06-10 00:20:00    NA
@@ -70,7 +70,7 @@ totalStepsHist <- hist(daylytotal, breaks = 25, xlab = "Total steps per day")
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
-The `mean` total number of steps per day is **9354.3934** and the `median` total number of steps per day is **10395**.
+The `mean` total number of steps per day is **9354.2295** and the `median` total number of steps per day is **10395**.
 
 The histogram of the toatl number of steps per day is
 
@@ -118,8 +118,10 @@ daylyTotal <- tapply(data$steps, factor(data$date), sum, na.rm = TRUE)
         
 par(mfrow = c(2,1), mar = c(4,4,2,1), oma = c(0,0,2,0))
         
-hist(daylyTotal, breaks = 25, xlab = "Total steps per day")
-hist(fillDaylyTotal, breaks = 25, xlab = "Total steps per day")
+hist(daylyTotal, breaks = 25, xlab = "Total steps per day", 
+                              main = "Data with NA values")
+hist(fillDaylyTotal, breaks = 25, xlab = "Total steps per day",
+                                  main = "NA values substituted with interval means")
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
@@ -132,21 +134,32 @@ fillMeadin <- median(fillDaylyTotal)
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ```r
+library(lattice)
 fDays<- factor((weekdays(data$date) %in% c('Saturday','Sunday')), 
-                       labels = c("weekdays", "weekends"))
-#daylytotals <- tapply(data$steps, fDays+factor(data$intervals), mean, na.rm = TRUE) 
+                       labels = c("weekday", "weekend")) 
+        
 lDaysSteps <- split(fillData, fDays)
 lDaysSteps <- lapply(lDaysSteps, 
-        function(x){
-                aggregate(x, list(x$interval), mean, na.rm = TRUE)
-        })
-par(mfrow = c(2,1))
+                     function(x){
+                             x <- aggregate(x, list(x$interval), mean, na.rm = TRUE)
+                             x <- x[ , c("interval", "steps")]
+                             x
+                     })
+
+lDaysSteps<-do.call(rbind, lDaysSteps)
+
+lDaysSteps <- cbind(rownames(lDaysSteps), lDaysSteps )
+rownames(lDaysSteps) <- seq(1:dim(lDaysSteps)[1])
+       
+names(lDaysSteps) <- c("fday", "interval", "steps")
+
+splitNames <- strsplit(as.character(lDaysSteps$fday), ".", fixed = TRUE)        
+lDaysSteps$fday <- sapply(splitNames, function(x){x[1]} )
+lDaysSteps$fday <- as.factor(lDaysSteps$fday)
         
-with(lDaysSteps[[1]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
-                                                        ylab = "Average steps"))
-   
-with(lDaysSteps[[2]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
-                                                        ylab = "Average steps"))
+daysSteps <<- lDaysSteps
+        
+xyplot(steps~interval|fday, data=lDaysSteps, type = "l", layout=c(1,2))
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 

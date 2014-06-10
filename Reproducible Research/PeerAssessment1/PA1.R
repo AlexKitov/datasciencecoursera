@@ -13,9 +13,9 @@ question1 <- function(){
                 unzip(destFile )
         }  
         
-        data <- read.csv(file = dataFile, header = TRUE)
+        data <- read.csv(file = dataFile, header = TRUE, stringsAsFactors = FALSE)
         
-        data$date <- as.Date(data$date, format = "%d/%m/%Y")
+        data$date <- as.Date(data$date, format = "%Y-%m-%d")
         
         data$interval <- sprintf("%04d", data$interval)
         data$interval <- as.POSIXct(data$interval, format = "%H%M")
@@ -59,10 +59,12 @@ inputNAval <- function(){
         fillDaylyTotal <- tapply(fillData$steps, factor(fillData$date), sum, na.rm = TRUE)
         daylyTotal <- tapply(data$steps, factor(data$date), sum, na.rm = TRUE)
         
-        par(mfrow = c(2,1), mar = c(4,4,2,1), oma = c(0,0,2,0))
+        par(mfrow = c(2,1), mar = c(3,3,2,0), oma = c(0,0,2,0))
         
-        hist(daylyTotal, breaks = 25, xlab = "Total steps per day")
-        hist(fillDaylyTotal, breaks = 25, xlab = "Total steps per day")
+        hist(daylyTotal, breaks = 25, xlab = "Total steps per day", 
+             main = "Data with NA values")
+        hist(fillDaylyTotal, breaks = 25, xlab = "Total steps per day",
+             main = "NA values substituted with interval means",)
         
         fillMean <- mean(fillDaylyTotal)
         fillMeadin <- median(fillDaylyTotal)
@@ -71,19 +73,47 @@ inputNAval <- function(){
 lastOne <- function(){
         fDays<- factor((weekdays(data$date) %in% c('Saturday','Sunday')), 
                        labels = c("weekday", "weekend")) 
+        
+        lDaysSteps <- split(fillData, fDays)
+        lDaysSteps <- lapply(lDaysSteps, 
+                             function(x){
+                                     x <- aggregate(x, list(x$interval), mean, na.rm = TRUE)
+                                     x <- x[ , c("interval", "steps")]
+                                     x
+                             })
+        
+        lDaysSteps<-do.call(rbind, lDaysSteps)
+        
+        lDaysSteps <- cbind(rownames(lDaysSteps), lDaysSteps )
+        rownames(lDaysSteps) <- seq(1:dim(lDaysSteps)[1])
+       
+        names(lDaysSteps) <- c("fday", "interval", "steps")
+
+        splitNames <- strsplit(as.character(lDaysSteps$fday), ".", fixed = TRUE)        
+        lDaysSteps$fday <- sapply(splitNames, function(x){x[1]} )
+        lDaysSteps$fday <- as.factor(lDaysSteps$fday)
+        
+        daysSteps <<- lDaysSteps
+        
+        xyplot(steps~interval|fday, data=lDaysSteps, type = "l", layout=c(1,2))
+}
+
+lastOneTemp <- function(){
+        fDays<- factor((weekdays(data$date) %in% c('Saturday','Sunday')), 
+                       labels = c("weekdays", "weekends"))
+        
         lDaysSteps <- split(fillData, fDays)
         lDaysSteps <- lapply(lDaysSteps, 
                              function(x){
                                      aggregate(x, list(x$interval), mean, na.rm = TRUE)
                              })
-        par(mfrow = c(2,1))
+        
+        par(mfrow = c(2,1), mar = c(3,3,2,1), oma = c(0,0,2,0))
         
         with(lDaysSteps[[1]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
-                                    ylab = "Average steps"))
+                                                               ylab = "Average steps"))
         
         with(lDaysSteps[[2]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
-                                    ylab = "Average steps"))
-        plotdata <- do.call(rbind,lDaysSteps)
+                                                               ylab = "Average steps"))
         
-        xyplot(steps~Group.1|fDays, data=plotdata, layout=c(1,2))
 }
