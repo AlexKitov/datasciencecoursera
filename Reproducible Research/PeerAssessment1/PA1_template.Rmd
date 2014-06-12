@@ -28,8 +28,9 @@ data$interval <- as.POSIXct(data$interval, format = "%H%M")
 data <- data[, c("date", "interval", "steps")]
 
 head(data, n = 6)
-tail(data, n = 6)
 ```
+
+As it can be seen from the data in the interval feature current day is added in front of the time interval. This is internally done by `as.POSIXct`. However it is not a problem since all the graphs and intervals later in the report are presented with nice readable intervals.
 
 ## What is mean total number of steps taken per day?
 
