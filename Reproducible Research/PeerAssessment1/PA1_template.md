@@ -3,17 +3,21 @@
 
 ## Loading and preprocessing the data
 
+The code checks for the existance of the `activity.csv` in the working directory. If the file does not exist the script checks for `activity.zip` and inzips the file. If the `activity.zip` does not exist the code downloads the .zip file unzips it adn reads the data from `activity.csv` If there is a problem with the internet connection `download.file` throws a message `method = "internla"` beacsue the `URL = https`
+
 
 ```r
+library(lattice)
+library(chron)
+
 fileURL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 destFile <- "activity.zip"
 dataFile <- "activity.csv"
 if (!file.exists(dataFile)) {
         if (!file.exists(destFile)) {
-                # If the destionation is unreachable download.file throws error
                 download.file (fileURL, destFile, method = "internal")
         }
-        unzip(destFile )
+        unzip(destFile)
 }  
 
 data <- read.csv(file = dataFile, header = TRUE)
@@ -24,39 +28,37 @@ data$interval <- as.POSIXct(data$interval, format = "%H%M")
 
 data <- data[, c("date", "interval", "steps")]
 
-head(data, n = 25)
+head(data, n = 6)
 ```
 
 ```
-##          date            interval steps
-## 1  2012-10-01 2014-06-10 00:00:00    NA
-## 2  2012-10-01 2014-06-10 00:05:00    NA
-## 3  2012-10-01 2014-06-10 00:10:00    NA
-## 4  2012-10-01 2014-06-10 00:15:00    NA
-## 5  2012-10-01 2014-06-10 00:20:00    NA
-## 6  2012-10-01 2014-06-10 00:25:00    NA
-## 7  2012-10-01 2014-06-10 00:30:00    NA
-## 8  2012-10-01 2014-06-10 00:35:00    NA
-## 9  2012-10-01 2014-06-10 00:40:00    NA
-## 10 2012-10-01 2014-06-10 00:45:00    NA
-## 11 2012-10-01 2014-06-10 00:50:00    NA
-## 12 2012-10-01 2014-06-10 00:55:00    NA
-## 13 2012-10-01 2014-06-10 01:00:00    NA
-## 14 2012-10-01 2014-06-10 01:05:00    NA
-## 15 2012-10-01 2014-06-10 01:10:00    NA
-## 16 2012-10-01 2014-06-10 01:15:00    NA
-## 17 2012-10-01 2014-06-10 01:20:00    NA
-## 18 2012-10-01 2014-06-10 01:25:00    NA
-## 19 2012-10-01 2014-06-10 01:30:00    NA
-## 20 2012-10-01 2014-06-10 01:35:00    NA
-## 21 2012-10-01 2014-06-10 01:40:00    NA
-## 22 2012-10-01 2014-06-10 01:45:00    NA
-## 23 2012-10-01 2014-06-10 01:50:00    NA
-## 24 2012-10-01 2014-06-10 01:55:00    NA
-## 25 2012-10-01 2014-06-10 02:00:00    NA
+##         date            interval steps
+## 1 2012-10-01 2014-06-12 00:00:00    NA
+## 2 2012-10-01 2014-06-12 00:05:00    NA
+## 3 2012-10-01 2014-06-12 00:10:00    NA
+## 4 2012-10-01 2014-06-12 00:15:00    NA
+## 5 2012-10-01 2014-06-12 00:20:00    NA
+## 6 2012-10-01 2014-06-12 00:25:00    NA
+```
+
+```r
+tail(data, n = 6)
+```
+
+```
+##             date            interval steps
+## 17563 2012-11-30 2014-06-12 23:30:00    NA
+## 17564 2012-11-30 2014-06-12 23:35:00    NA
+## 17565 2012-11-30 2014-06-12 23:40:00    NA
+## 17566 2012-11-30 2014-06-12 23:45:00    NA
+## 17567 2012-11-30 2014-06-12 23:50:00    NA
+## 17568 2012-11-30 2014-06-12 23:55:00    NA
 ```
 
 ## What is mean total number of steps taken per day?
+
+At first the code sumes up the number of steps for every day. Consequently the mean and median of this total number of steps per day is calculated in `mean` and `median` variables.
+
 
 ```r
 daylytotal <- tapply(data$steps, factor(data$date), sum, na.rm = TRUE)
@@ -65,40 +67,67 @@ mean <- mean(daylytotal)
 
 median <- median(daylytotal)
 
-totalStepsHist <- hist(daylytotal, breaks = 25, xlab = "Total steps per day")
+mean 
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+```
+## [1] 9354
+```
+
+```r
+median
+```
+
+```
+## [1] 10395
+```
 
 The `mean` total number of steps per day is **9354.2295** and the `median` total number of steps per day is **10395**.
 
-The histogram of the toatl number of steps per day is
+The histogram of the toatl number of steps per day is: 
 
-
-## What is the average daily activity pattern?
 
 ```r
-x <- aggregate(data, list(data$interval), mean, na.rm = TRUE)
-x <- x[, c("Group.1","steps")]
-names(x) <- c("interval","steps")
-        
-plot (x$interval, x$steps, type = "l",  xlab = "Interval", 
-                                        ylab = "Average steps")
+histogram(daylytotal, breaks = 25, type = "count", col = "NA", 
+                      xlab = "Total steps per day",
+                      ylab = "Frequency")
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
+## What is the average daily activity pattern?
+
+The code calculates the avedarage steps per day, plots the steps with respect to the intervals and finds out the interval with maximum average steps.
+
+
 ```r
-maxsteps <- which(x$steps == max(x$steps))
-x[maxsteps, c("interval", "steps")]
+df <- aggregate(data, list(data$interval), mean, na.rm = TRUE)
+df <- df[, c("interval","steps")]
+        
+plot (df$interval, df$steps, type = "l",  xlab = "Interval", 
+                                        ylab = "Average steps")
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+
+```r
+maxsteps <- which(df$steps == max(df$steps))
+maxSteps <- df[maxsteps, c("interval", "steps")]
+maxSteps <- transform(maxSteps, interval = strftime(interval, format="%H:%M:%S"))
+maxSteps
 ```
 
 ```
-##                interval steps
-## 104 2014-06-10 08:35:00 206.2
+##     interval steps
+## 104 08:35:00 206.2
 ```
+
+The maximum average steps per interval si ***206.1698*** and they are during the time interval of ***08:35:00*** in the morning.
 
 ## Imputing missing values
+
+The code inputs missing values in the data.frame with the average value for the specific interval in which` the missing values` value occurs. Afterwords, are calculated the total number of steps the meadn and the median per day. The data is compared with the the results before replacing `the missing values`
+
 
 ```r
 totalNA <- sum(is.na(data))
@@ -124,42 +153,57 @@ hist(fillDaylyTotal, breaks = 25, xlab = "Total steps per day",
                                   main = "NA values substituted with interval means")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
 ```r
 fillMean <- mean(fillDaylyTotal)
-fillMeadin <- median(fillDaylyTotal)
+fillMedian <- median(fillDaylyTotal)
 ```
+
+As shown in the graph the total number of steps per day is expectingly incresed after replasing `the missing values` with the interval's average value. This makes the distribution steeper wuth better expreseed meand value. However the increse in mean and median values after replacing `the missing values` is relatively small:
+
+1. Mean value ***`before`*** NA replacement : 9354.2295
+2. Mean value ***`after`***  NA replacement : 1.0766 &times; 10<sup>4</sup>
+3. Median value ***`before`*** NA replacement : 10395
+4. Median value ***`after`***  NA replacement : 1.0766 &times; 10<sup>4</sup>
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+The code calculates the average steps per interval for each group of days `weekdays` and `weekends`. Furhtermore, the data is processed in a format convenient for `xyplot` plotting function from `lattice` package.
+
+
 ```r
-library(lattice)
 fDays<- factor((weekdays(data$date) %in% c('Saturday','Sunday')), 
-                       labels = c("weekday", "weekend")) 
+                       labels = c("weekdays", "weekends"))
         
 lDaysSteps <- split(fillData, fDays)
 lDaysSteps <- lapply(lDaysSteps, 
-                     function(x){
-                             x <- aggregate(x, list(x$interval), mean, na.rm = TRUE)
-                             x <- x[ , c("interval", "steps")]
-                             x
-                     })
-
-lDaysSteps<-do.call(rbind, lDaysSteps)
-
-lDaysSteps <- cbind(rownames(lDaysSteps), lDaysSteps )
-rownames(lDaysSteps) <- seq(1:dim(lDaysSteps)[1])
-       
-names(lDaysSteps) <- c("fday", "interval", "steps")
-
-splitNames <- strsplit(as.character(lDaysSteps$fday), ".", fixed = TRUE)        
-lDaysSteps$fday <- sapply(splitNames, function(x){x[1]} )
-lDaysSteps$fday <- as.factor(lDaysSteps$fday)
+                        function(x){
+                                aggregate(x, list(x$interval), mean, na.rm = TRUE)
+                        })
         
-daysSteps <<- lDaysSteps
+par(mfrow = c(2,1), mar = c(3,3,2,1), oma = c(0,0,2,0))
+
+with(lDaysSteps[[2]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
+                                                        ylab = "Average steps",
+                                                        main = "Weekend",
+                                                        ylim = c(0, 200)))
         
-xyplot(steps~interval|fday, data=lDaysSteps, type = "l", layout=c(1,2))
+with(lDaysSteps[[1]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
+                                                        ylab = "Average steps",
+                                                        main = "Weekdays"))
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+
+```r
+weekendTotal <- sum(lDaysSteps[[2]]$steps)
+weekTotal <- sum(lDaysSteps[[1]]$steps)
+```
+
+From the plots presented above it becomes evident that in the weekend the average number of steps in the different periods is more even during the day compared with the week days. There is a very well defined peak in the average number of steps before 9:00 am and few smaller peacks around lunch and before the end of the working day. However, it seems the area under the weekends' line is larger in comparison with the area under weekdays'line proposing the total number of steps is larger in the weekends, namely:
+
+1. The total number of steps in the ***`weekend`*** is: 1.2202 &times; 10<sup>4</sup>  
+2. The total number of steps in the ***`weekdays`*** is: 1.0256 &times; 10<sup>4</sup>
+
+This proves that the subjects do more steps in the weekend in comparison with the weekdays.

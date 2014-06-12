@@ -34,8 +34,7 @@ question2 <- function(){
 question3 <- function(){
         
         x <- aggregate(data, list(data$interval), mean, na.rm = TRUE)
-        x <- x[, c("Group.1","steps")]
-        names(x) <- c("interval","steps")
+        x <- x[, c("interval","steps")]
         
         plot (x$interval, x$steps, type = "l", xlab = "Interval", 
                                                ylab = "Average steps")
@@ -93,6 +92,10 @@ lastOne <- function(){
         lDaysSteps$fday <- sapply(splitNames, function(x){x[1]} )
         lDaysSteps$fday <- as.factor(lDaysSteps$fday)
         
+        splitNames <- strsplit(as.character(lDaysSteps$interval), " ", fixed = TRUE)
+        lDaysSteps$interval <- sapply(splitNames, function(x){chron(time = x[2])} )
+
+        
         daysSteps <<- lDaysSteps
         
         xyplot(steps~interval|fday, data=lDaysSteps, type = "l", layout=c(1,2))
@@ -116,4 +119,28 @@ lastOneTemp <- function(){
         with(lDaysSteps[[2]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
                                                                ylab = "Average steps"))
         
+}
+
+lastOneTemp2 <- function(){
+fDays<- factor((weekdays(data$date) %in% c('Saturday','Sunday')), 
+               labels = c("weekdays", "weekends"))
+
+lDaysSteps <- split(fillData, fDays)
+lDaysSteps <- lapply(lDaysSteps, 
+                     function(x){
+                             aggregate(x, list(x$interval), mean, na.rm = TRUE)
+                     })
+
+par(mfrow = c(2,1), mar = c(3,3,2,1), oma = c(0,0,2,0))
+
+with(lDaysSteps[[2]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
+                            ylab = "Average steps",
+                            main = "Weekends",
+                            ylim = c(0, 200)))
+
+with(lDaysSteps[[1]], plot (Group.1, steps, type = "l", xlab = "Intervals", 
+                            ylab = "Average steps",
+                            main = "Weekdays"))
+weekendTotal <- tapply(lDaysSteps[[2]], as.factor(lDaysSteps[[2]]$interval),sum)
+weekTotal <- tapply(lDaysSteps[[1]], as.factor(lDaysSteps[[1]]$interval),sum)
 }
