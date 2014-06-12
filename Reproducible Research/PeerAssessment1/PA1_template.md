@@ -93,7 +93,7 @@ df <- aggregate(data, list(data$interval), mean, na.rm = TRUE)
 df <- df[, c("interval","steps")]
         
 plot (df$interval, df$steps, type = "l",  xlab = "Interval", 
-                                        ylab = "Average steps")
+                                          ylab = "Average steps")
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 

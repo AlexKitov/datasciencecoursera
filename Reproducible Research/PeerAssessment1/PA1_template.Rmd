@@ -66,7 +66,7 @@ df <- aggregate(data, list(data$interval), mean, na.rm = TRUE)
 df <- df[, c("interval","steps")]
         
 plot (df$interval, df$steps, type = "l",  xlab = "Interval", 
-                                        ylab = "Average steps")
+                                          ylab = "Average steps")
 maxsteps <- which(df$steps == max(df$steps))
 maxSteps <- df[maxsteps, c("interval", "steps")]
 maxSteps <- transform(maxSteps, interval = strftime(interval, format="%H:%M:%S"))
