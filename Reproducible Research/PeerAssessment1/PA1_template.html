@@ -181,9 +181,9 @@ hljs.initHighlightingOnLoad();
 <body>
 <h1>Reproducible Research: Peer Assessment 1</h1>
 
-<h2>Loading and preprocessing the data</h2>
+<h2>Loading and pre-processing the data</h2>
 
-<p>The code checks for the existance of the <code>activity.csv</code> in the working directory. If the file does not exist the script checks for <code>activity.zip</code> and inzips the file. If the <code>activity.zip</code> does not exist the code downloads the .zip file unzips it adn reads the data from <code>activity.csv</code> If there is a problem with the internet connection <code>download.file</code> throws a message <code>method = &quot;internla&quot;</code> beacsue the <code>URL = https</code></p>
+<p>The code checks for the existence of the <code>activity.csv</code> in the working directory. If the file does not exist the script checks for <code>activity.zip</code> and unzips the file. If the <code>activity.zip</code> does not exist the code downloads the .zip file unzips it and reads the data from <code>activity.csv</code> If there is a problem with the internet connection <code>download.file</code> throws a message <code>method = &quot;internal&quot;</code> because the <code>URL = https</code></p>
 
 <pre><code class="r">library(lattice)
 library(chron)
@@ -232,7 +232,7 @@ head(data, n = 6)
 
 <h2>What is mean total number of steps taken per day?</h2>
 
-<p>At first the code sumes up the number of steps for every day. Consequently the mean and median of this total number of steps per day is calculated in <code>mean</code> and <code>median</code> variables.</p>
+<p>At first the code sums up the number of steps for every day. Consequently the mean and median of this total number of steps per day is calculated in <code>mean</code> and <code>median</code> variables.</p>
 
 <pre><code class="r">daylytotal &lt;- tapply(data$steps, factor(data$date), sum, na.rm = TRUE)
 
@@ -254,7 +254,7 @@ mean
 
 <p>The <code>mean</code> total number of steps per day is <strong>9354.2295</strong> and the <code>median</code> total number of steps per day is <strong>10395</strong>.</p>
 
-<p>The histogram of the toatl number of steps per day is: </p>
+<p>The histogram of the total number of steps per day is: </p>
 
 <pre><code class="r">histogram(daylytotal, breaks = 25, type = &quot;count&quot;, col = &quot;NA&quot;, 
                       xlab = &quot;Total steps per day&quot;,
@@ -265,7 +265,7 @@ mean
 
 <h2>What is the average daily activity pattern?</h2>
 
-<p>The code calculates the avedarage steps per day, plots the steps with respect to the intervals and finds out the interval with maximum average steps.</p>
+<p>The code calculates the average steps per day, plots the steps with respect to the intervals and finds out the interval with maximum average steps.</p>
 
 <pre><code class="r">df &lt;- aggregate(data, list(data$interval), mean, na.rm = TRUE)
 df &lt;- df[, c(&quot;interval&quot;,&quot;steps&quot;)]
@@ -286,11 +286,11 @@ maxSteps
 ## 104 08:35:00 206.2
 </code></pre>
 
-<p>The maximum average steps per interval si <strong><em>206.1698</em></strong> and they are during the time interval of <strong><em>08:35:00</em></strong> in the morning.</p>
+<p>The maximum average steps per interval is <strong><em>206.1698</em></strong> and they are during the time interval of <strong><em>08:35:00</em></strong> in the morning.</p>
 
 <h2>Imputing missing values</h2>
 
-<p>The code inputs missing values in the data.frame with the average value for the specific interval in which<code>the missing values</code> value occurs. Afterwords, are calculated the total number of steps the meadn and the median per day. The data is compared with the the results before replacing <code>the missing values</code></p>
+<p>The code inputs missing values in the data.frame with the average value for the specific interval in which<code>the missing values</code> value occurs. Afterwards, are calculated the total number of steps the mean and the median per day. The data is compared with the results before replacing <code>the missing values</code></p>
 
 <pre><code class="r">totalNA &lt;- sum(is.na(data))
 
@@ -321,7 +321,7 @@ hist(fillDaylyTotal, breaks = 25, xlab = &quot;Total steps per day&quot;,
 fillMedian &lt;- median(fillDaylyTotal)
 </code></pre>
 
-<p>As shown in the graph the total number of steps per day is expectingly incresed after replasing <code>the missing values</code> with the interval&#39;s average value. This makes the distribution steeper wuth better expreseed meand value. However the increse in mean and median values after replacing <code>the missing values</code> is relatively small:</p>
+<p>As shown in the graph the total number of steps per day increased after replacing <code>the missing values</code> with the interval&#39;s average value. This makes the distribution steeper with better expressed mean value. However the increase in mean and median values after replacing <code>the missing values</code> is relatively small:</p>
 
 <ol>
 <li>Mean value <strong><em><code>before</code></em></strong> NA replacement : 9354.2295</li>
@@ -332,7 +332,7 @@ fillMedian &lt;- median(fillDaylyTotal)
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
-<p>The code calculates the average steps per interval for each group of days <code>weekdays</code> and <code>weekends</code>. Furhtermore, the data is processed in a format convenient for <code>xyplot</code> plotting function from <code>lattice</code> package.</p>
+<p>The code calculates the average steps per interval for each group of days <code>weekdays</code> and <code>weekends</code>. Furthermore, the data is processed in a format convenient for <code>xyplot</code> plotting function from <code>lattice</code> package.</p>
 
 <pre><code class="r">fDays&lt;- factor((weekdays(data$date) %in% c(&#39;Saturday&#39;,&#39;Sunday&#39;)), 
                        labels = c(&quot;weekdays&quot;, &quot;weekends&quot;))
@@ -361,7 +361,7 @@ with(lDaysSteps[[1]], plot (Group.1, steps, type = &quot;l&quot;, xlab = &quot;I
 weekTotal &lt;- sum(lDaysSteps[[1]]$steps)
 </code></pre>
 
-<p>From the plots presented above it becomes evident that in the weekend the average number of steps in the different periods is more even during the day compared with the week days. There is a very well defined peak in the average number of steps before 9:00 am and few smaller peacks around lunch and before the end of the working day. However, it seems the area under the weekends&#39; line is larger in comparison with the area under weekdays&#39;line proposing the total number of steps is larger in the weekends, namely:</p>
+<p>From the plots presented above it becomes evident that in the weekend the average number of steps in the different periods is more even during the day compared with the week days. There is a very well defined peak in the average number of steps before 9:00 am and few smaller peaks around lunch and before the end of the working day. However, it seems the area under the weekends&#39; line is larger in comparison with the area under weekdays&#39; line proposing the total number of steps is larger in the weekends, namely:</p>
 
 <ol>
 <li>The total number of steps in the <strong><em><code>weekend</code></em></strong> is: 1.2202 &times; 10<sup>4</sup><br/></li>
