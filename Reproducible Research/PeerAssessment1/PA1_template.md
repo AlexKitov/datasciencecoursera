@@ -41,19 +41,7 @@ head(data, n = 6)
 ## 6 2012-10-01 2014-06-12 00:25:00    NA
 ```
 
-```r
-tail(data, n = 6)
-```
-
-```
-##             date            interval steps
-## 17563 2012-11-30 2014-06-12 23:30:00    NA
-## 17564 2012-11-30 2014-06-12 23:35:00    NA
-## 17565 2012-11-30 2014-06-12 23:40:00    NA
-## 17566 2012-11-30 2014-06-12 23:45:00    NA
-## 17567 2012-11-30 2014-06-12 23:50:00    NA
-## 17568 2012-11-30 2014-06-12 23:55:00    NA
-```
+As it can be seen from the data in the interval feature current day is added in front of the time interval. This is internally done by `as.POSIXct`. However it is not a problem since all the graphs and intervals later in the report are presented with nice readable intervals.
 
 ## What is mean total number of steps taken per day?
 
