@@ -55,12 +55,12 @@ plot4 <- function(){
                 geom_line(size = 1) +
                 
                 # Formating the plot title, y axis label, name of the legend
-                labs(title = "Total coal related emissions", 
+                labs(title = "Total coal-related emissions", 
                      y = expression("Emissions PM"[2.5]* " , tons 10"^3)) +
                 
                 # Setting the plot title size
                 theme(plot.title = element_text(size = 20))
         
         # Saving the plot in .png file
-        ggsave(filename = "plot4.png", width = 6, height = 4.5, dpi = 1200)
+        ggsave(filename = "plot4.png", width = 4.8, height = 4.8, dpi = 120)
 }

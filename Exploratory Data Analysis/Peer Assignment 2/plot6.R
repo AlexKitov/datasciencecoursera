@@ -6,7 +6,7 @@ plot6 <- function(){
         # Check for existing dataset and unzip if necessary
         # This assignment uses data from the UC Irvine Machine Learning Repository, 
         # a popular repository for machine learning datasets. In particular, 
-        # we will be using the “Individual household electric power consumption Data Set”
+        # we will be using the "Individual household electric power consumption Data Set"
         # which I have made available on the course web site:
         fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
         zipFile <- "exdata-data-NEI_data.zip"
@@ -44,7 +44,7 @@ plot6 <- function(){
         # Calculating the yearly total emissions, 
         # respectivly for Baltimor and LA
         yVehBaltTotal <- with(vehBalt, 
-                       aggregate(emissions, by = list(as.factor(year)), sum))
+                              aggregate(emissions, by = list(as.factor(year)), sum))
         
         yVehLATotal   <- with(vehLA, 
                               aggregate(emissions, by = list(as.factor(year)), sum))
@@ -65,15 +65,15 @@ plot6 <- function(){
                 geom_line(data = yVehLATotal, aes(y = emissions, group = 1, colour = "LA"), size = 1) +
                 
                 # Formating the plot title, y axis label, name of the legend
-                labs(title = "Total vehicle related emissions", 
+                labs(title = "Total vehicle-related emissions", 
                      y = expression("Emissions PM"[2.5]* " , tons"), 
                      colour = "County") +
                 
                 # Setting the plot title size
-                theme(plot.title = element_text(size = 20)) 
-                
+                theme(plot.title = element_text(size = 20), legend.position="bottom") 
+        
         # Saving the plot in .png file
-        ggsave(filename = "plot6.png", width = 6, height = 4.5, dpi = 1200)
-      
+        ggsave(filename = "plot6.png", width = 4.8, height = 4.8, dpi = 120)
+        
         
 }

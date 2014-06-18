@@ -50,14 +50,14 @@ plot3 <- function(){
                 geom_line(aes(col=type), size = 1)+
                 
                 # Formating the plot title, y axis label, name of the legend
-                labs(title = "Emissions by type of sourcess", 
+                labs(title = "Emissions by type of sources", 
                      y = expression("Emissions PM"[2.5]* " , tons"),
                      colour = "Point type") +
                 
                 # Setting the plot title size
-                theme(plot.title = element_text(size = 20))
+                theme(plot.title = element_text(size = 20), legend.position="top")
         
         # Saving the plot in .png file
-        ggsave(filename = "plot3.png", width = 6, height = 4.5, dpi = 1200)
+        ggsave(filename = "plot3.png", width = 4.8, height = 4.8, dpi = 120)
         
 }

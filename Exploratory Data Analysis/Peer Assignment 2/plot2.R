@@ -37,7 +37,7 @@ plot2 <- function(){
         png(filename = "plot2.png")
         
         # Setting up the margines of the plot
-        par(mar = c(4.5, 4.5, 1, 1))
+        par(mar = c(4.5, 4.5, 3, 1))
         
         # Scaling and plotting with the base plot system
         scale <- 1000
@@ -48,6 +48,7 @@ plot2 <- function(){
                                         ylab = expression("Total PM"[2.5]*" , tones 10"^3),  
                                         xlab = "Year, y",
                                         lwd = 3,
-                                        col = "blue")
+                                        col = "blue",
+                                        main = expression("Total PM"[2.5]*" emissions per year in Baltimore City"))
         dev.off()
 }

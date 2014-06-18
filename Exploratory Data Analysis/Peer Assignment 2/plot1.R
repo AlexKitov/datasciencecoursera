@@ -35,7 +35,7 @@ plot1 <- function(){
         
         # Open .png device and set the margines for the plot
         png(filename = "plot1.png")
-        par(mar = c(4.5, 4.5, 1, 1))
+        par(mar = c(4.5, 4.5, 3, 1))
         
         # Plotting with the base plot system
         plot(as.numeric(names(yTotal)), yTotal/scale, 
@@ -45,6 +45,7 @@ plot1 <- function(){
                                         xlab = "Year, y",
                                         ylab = expression("Total PM"[2.5]*", tones 10"^6),
                                         lwd = 3,
-                                        col = "blue")
+                                        col = "blue",
+                                        main = expression("Total PM"[2.5]*" emissions per year in U.S.A"))
         dev.off()
 }
