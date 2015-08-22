@@ -1,0 +1,4 @@
+---
+output: pdf_document
+---
+### This repository contains work related to Data Products coursera class part of the Data Scientist specialisation with John Hopkins Bloomberg School of Public Healst.
