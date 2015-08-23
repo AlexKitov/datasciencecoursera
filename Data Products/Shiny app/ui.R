@@ -78,7 +78,8 @@ shinyUI(
                                   p('Full code of the application can be found at ', 
                                     a('Movies analysis', 
                                       href = 'https://github.com/AlexKitov/datasciencecoursera/tree/master/Data%20Products/Shiny%20app',
-                                      style = "color:#268BD2; font-weight: bold;")
+                                      style = "color:#268BD2; font-weight: bold;",
+                                      target = "_blank")
                                   ),
                                   h3("User guide"),
                                   p('This app aims to give the maximum amount of freedom to the user in \
