@@ -28,15 +28,16 @@ shinyServer(function(session, input, output) {
                                         rp1 <- rPlot(x = paste("bin(", x,", ", bin_size,")", sep = ""), y = paste("count(", x,")", sep = ""), 
                                                      data = movies, type = "bar")
                                         rp1$guides(
-                                                x = list(title = x),
+                                                x = list(title = x, style = "color:red"),
                                                 y = list(title = 'Count')
                                         )
+                                        rp1$set(width = 1000, height = 550)
                                         rp1$addParams(dom = 'hist')
                                 })
                                 rp1
                         }
                 })
-        observeEvent(input$hist_var, {updateSliderInput(session, "hist_max", label = "Maximum value:", 
+        observeEvent(input$hist_var, {updateSliderInput(session, "hist_max", label = paste( input$hist_var, " range:", sep = ""), 
                                                         min = min(movies[, input$hist_var], na.rm = T),
                                                         max = max(movies[, input$hist_var], na.rm = T),
                                                         value = c(   min(movies[, input$hist_var], na.rm = T),
@@ -77,14 +78,14 @@ shinyServer(function(session, input, output) {
                                         x = list(title = input$x_axis),
                                         y = list(title = input$y_axis)
                                 )
-                                #rp1$set(width = 1000, height = 550)
+                                rp1$set(width = 1100, height = 550)
                                 rp1$addParams(dom = 'scat')
                                 rp1      
                         })    
                 }
         })
         
-        observeEvent(input$x_axis, {updateSliderInput(session, "scat_range", label = paste(input$x_axis, "range", sep = " "), 
+        observeEvent(input$x_axis, {updateSliderInput(session, "scat_range", label = paste(input$x_axis, "range:", sep = " "), 
                                                         min = min(movies[, input$x_axis], na.rm = T),
                                                         max = max(movies[, input$x_axis], na.rm = T),
                                                         value = c(   min(movies[, input$x_axis], na.rm = T),
